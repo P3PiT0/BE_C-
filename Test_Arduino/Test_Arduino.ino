@@ -1,10 +1,9 @@
+// the setup function runs once when you press reset or power the board
 void setup() {
-  // put your setup code here, to run once:
-  cout<<"salut mon pote"<<endl;
 
 }
-COUCOU
+
+// the loop function runs over and over again forever
 void loop() {
-  // put your main code here, to run repeatedly:
 
 }
