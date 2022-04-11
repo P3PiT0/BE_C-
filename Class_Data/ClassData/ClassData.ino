@@ -9,7 +9,6 @@ using namespace std;
  SHT31 sensorHT = SHT31(); //I2C
  const int pinLight=A0; //Analog 
 
-
  class MapData{
   protected :
   static std::map <String, int> Data_map;
@@ -52,11 +51,9 @@ class Data {
         ID=a;
         SensorData=0;
       }
-      //virtual void compareData(std::map<String,int> Dmap) = 0;
       virtual void compareData(MapData Dmap) = 0;
       int getData(){return SensorData;}
       void change_map (MapData Dmap){
-      //void change_map (std::map<String,int> Dmap){
         Dmap.Data_map[ID]=SensorData;
       }
   friend class MapData;
@@ -114,10 +111,6 @@ class Light : public Data {
        change_map(Dmap);
     }
 };
-
-
-
-
 
 
 void setup() {
