@@ -13,18 +13,21 @@ using namespace std;
   protected :
   static std::map <String, int> Data_map;
   public:
-   /* MapData(){ 
-      Data_map.insert(pair<String, int>("HUMIDITY", 0));
-      Data_map.insert(pair<String, int>("TEMPERATURE", 0));
-      Data_map.insert(pair<String, int>("LIGHT", 0));*/
-      
-      /*Data_map["HUMIDITY"]=0;
-      Data_map["TEMPERATURE"]=0;
-      Data_map["LIGHT"]=0;*/
+    //MapData(){ 
+      //Data_map["HUMIDITY"]=0;
+      //Data_map["TEMPERATURE"]=0;
+      //Data_map["LIGHT"]=0;
     //}
-    static std::map <String, int> GetMap(){
+    void beginData(){
+      Data_map["HUMIDITY"]=0;
+      Data_map["TEMPERATURE"]=0;
+      Data_map["LIGHT"]=0;
+    }
+    
+    static const std::map <String, int>& GetMap(){
       return Data_map;
     }
+   
     void afficher_map(){
       for ( std::map<String,int>::iterator it = Data_map.begin(); it!=Data_map.end(); it++){
               Serial.print("ID : ");
@@ -112,17 +115,17 @@ class Light : public Data {
     }
 };
 
-
-void setup() {
-  Serial.begin(74880);
-  sensorHT.begin();
-}
- 
  Humidity H1;//= Humidity();
  Temperature T1;//= Temperature();
  Light L1;//= Light(); 
  MapData M1;//= MapData();
  std::map <String, int> MapData::Data_map;
+
+void setup() {
+  Serial.begin(74880);
+  sensorHT.begin();
+  M1.beginData(); 
+}
 
 void loop() {
   Serial.println("piiiiiinte");
