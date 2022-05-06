@@ -7,7 +7,7 @@
 #include <string>
 using namespace std;
 
-Screen S1;
+Screen S;
 MapData M1;
 Humidity H1;
 Temperature T1;
@@ -30,21 +30,28 @@ void Afficher_MAP2(std::map<String,int> mamap){
 void setup() {
   Serial.begin(74880);
   InitSensor();
-  //sensorHT.begin();
-  S1.beginMap();
-  //M1.beginData(); 
+  S.beginMap();  
 }
 
 void loop() {
+  std::map <String,int> MAP;
   std::map <String,int> Capteur;
   std::map <String,int> Time;
   H1.compareData(M1);
   T1.compareData(M1);
   L1.compareData(M1);
   Capteur=M1.GetMap();
+  Serial.println("MAP M1:");
   M1.afficher_map(); 
   Time["HEURE"]=18;
   Time["MINUTE"]=15;
-  Afficher_MAP2(S1.BuildMap(Capteur,Time));
-  delay(5000);
+  Serial.println("Construction Map");
+  MAP=S.BuildMap(Capteur,Time);
+  
+  Serial.println("Affichage ancienne MAP (screen)");
+  S.Afficher_MAP(); 
+  S=MAP;
+  Serial.println("Affichage nouvelle MAP (screen)");
+  S.Afficher_MAP();
+  delay(10000);
 }

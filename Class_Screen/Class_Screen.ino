@@ -12,7 +12,7 @@ U8X8_SH1107_SEEED_128X128_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 
 using namespace std;
 
-class screen { 
+class Screen { 
   protected:
   std::map  <String, int> screen_data;
 
@@ -82,9 +82,25 @@ class screen {
     //u8x8.printf("%02d",0);
     u8x8.printf("%02d", minute);
     }
+
+    Screen& operator=(std::map<String, int>& MAP){
+        if ((screen_data["HUMIDITY"]) != (MAP["HUMIDITY"])){
+          screen_data["HUMIDITY"] = MAP["HUMIDITY"];
+          Serial.print("Affichage Humidity");
+        }
+        else if (screen_data["TEMPERATURE"] != MAP["TEMPERATURE"]){
+          screen_data["TEMPERATURE"] = MAP["TEMPERATURE"];
+          Serial.print("Affichage Temperature");
+        }
+        //LIGHT DIRECTEMENT DANS AFFICHAGE
+        screen_data["HEURE"] = MAP["HEURE"];
+        screen_data["MINUTE"] = MAP["MINUTE"];
+        return (*this);
+    }
+    
   };
 
-screen S1;
+Screen S1;
 
 void Afficher_MAP2(std::map<String,int> mamap){
     Serial.println("AfficherMap");
@@ -114,6 +130,7 @@ void loop() {
   Time["HEURE"]=18;
   Time["MINUTE"]=15;
   Afficher_MAP2(S1.BuildMap(Capteur,Time));
+  S1.Afficher_MAP(); 
   delay(5000);
 
 

@@ -23,14 +23,16 @@ class Screen {
   
   //METHODE DE GESTION DE MAP
   void beginMap(); //Initialisation de la MAP
-  const std::map<String, int> BuildMap(std::map <String, int> MapCapt, std::map <String, int> MapTime); //Retourne une MAP regroupant les différentes informations issues des capteurs et du RTC 
+  std::map<String, int> BuildMap(std::map <String, int> MapCapt, std::map <String, int> MapTime); //Retourne une MAP regroupant les différentes informations issues des capteurs et du RTC 
   void Afficher_MAP(); //Méthode pour l'affichage d'une MAP
   
   //METHODE D'AFFICHAGE SUR L'ECRAN
   void Afficher_temperature(int temp);
   void Afficher_humidite(int hum);
   void Afficher_time(int heure, int minute);
-  
+
+  //OPERATEUR
+  Screen &operator=(std::map<String, int>& MAP);
   };
 
 #endif
