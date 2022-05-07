@@ -28,6 +28,10 @@ class RTC {
     
   }
 
+  std::map <String,int> RetMap(){
+    return Time;
+  }
+
   void InitReveil (int h, int m){
     h=h;
     m=m;
@@ -48,13 +52,9 @@ class RTC {
     Serial.println("mois : ");
     Serial.print(Time["MOIS"]);
   }
-};
- 
-    RTC tt;
-    std::map <String,int> RTC::Time;
-void setup()
-{
-    Serial.begin(74880);
+
+  void setupRTC(){
+        Serial.begin(74880);
     // Attente de la connection serie avec l'Arduino
   while (!Serial);
  
@@ -70,6 +70,14 @@ void setup()
   temps.adjust(DateTime(F(__DATE__), F(__TIME__)));
  
   Serial.println("Horloge du module RTC mise a jour");
+  }
+};
+ 
+    RTC tt;
+    std::map <String,int> RTC::Time;
+void setup()
+{
+  tt.setupRTC();
 }
 
 void loop()
