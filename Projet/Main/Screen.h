@@ -15,9 +15,9 @@
 #include <Wire.h>
 #endif
 
-using namespace std;
-
 extern U8G2_SH1107_SEEED_128X128_1_HW_I2C u8g2;
+
+using namespace std;
 
 class Screen { 
   protected:
