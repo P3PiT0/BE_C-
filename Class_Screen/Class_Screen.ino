@@ -98,7 +98,7 @@ class screen {
    
     }
 
-  Screen& operator=(std::map<String, int>& MAP){
+  screen& operator=(std::map<String, int>& MAP){
         if ((screen_data["HUMIDITY"]) != (MAP["HUMIDITY"])){
           screen_data["HUMIDITY"] = MAP["HUMIDITY"];
           Serial.print("Affichage Humidity");

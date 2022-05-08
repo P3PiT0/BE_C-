@@ -29,7 +29,7 @@ class rtc {
   // METHODE DE GESTION DU REVEIL
   void InitReveil(int HEURE,int MINUTE); 
   void DelReveil();
-}
+};
 
 
 

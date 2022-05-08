@@ -9,7 +9,7 @@
 
 using namespace std;
 
-rtc T
+rtc T;  
 Screen S;
 MapData M1;
 Humidity H1;
