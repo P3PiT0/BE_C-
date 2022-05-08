@@ -1,19 +1,26 @@
-
+#include "RTC.h"
 #include "Screen.h"
 #include "Data.h"
+#include "Buzzer.h"
 #include <Arduino.h>
 #include <iostream>
 #include <map>
 #include <string>
+
 using namespace std;
 
+rtc T
 Screen S;
 MapData M1;
 Humidity H1;
 Temperature T1;
 Light L1;
+Buzzer Buz;
+
 
 std::map <String, int> MapData::Data_map;
+std::map <String,int> rtc::Time;
+
 
 
 
@@ -30,7 +37,10 @@ void Afficher_MAP2(std::map<String,int> mamap){
 void setup() {
   Serial.begin(74880);
   InitSensor();
-  S.beginMap();  
+  S.beginMap();
+  T.beginMap(); 
+  T.setupRTC();
+  Buz.beginBuzzer();
 }
 
 void loop() {
@@ -43,15 +53,25 @@ void loop() {
   Capteur=M1.GetMap();
   Serial.println("MAP M1:");
   M1.afficher_map(); 
-  Time["HEURE"]=18;
-  Time["MINUTE"]=15;
+
+  try{
+        T.RefreshTime();
+    }
+        catch (int e){
+        if (e==Reveil){
+              Buz.song();
+              Serial.println("Il est l'heure de se lever");
+        }
+    }
+  Capteur=M1.GetMap();
+  Time = T.RetMap();
   Serial.println("Construction Map");
   MAP=S.BuildMap(Capteur,Time);
-  
   Serial.println("Affichage ancienne MAP (screen)");
   S.Afficher_MAP(); 
   S=MAP;
   Serial.println("Affichage nouvelle MAP (screen)");
   S.Afficher_MAP();
+  S.Write_to_screen();
   delay(10000);
 }

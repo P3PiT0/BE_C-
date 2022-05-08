@@ -2,18 +2,23 @@
 #define Screen_H
 
 #include <map>
-#include <U8x8lib.h>
+#include <U8g2lib.h>
 #include <Arduino.h>
 #include <iostream>
 #include <string>
+
 #ifdef U8X8_HAVE_HW_SPI
 #include <SPI.h>
 #endif
 
+#ifdef U8X8_HAVE_HW_I2C
+#include <Wire.h>
+#endif
+
 using namespace std;
 
-
-extern U8X8_SH1107_SEEED_128X128_HW_I2C u8x8;
+extern U8G2_SH1107_SEEED_128X128_1_HW_I2C u8g2;
+//extern U8X8_SH1107_SEEED_128X128_HW_I2C u8x8;
 
 class Screen { 
   protected:
@@ -29,10 +34,14 @@ class Screen {
   //METHODE D'AFFICHAGE SUR L'ECRAN
   void Afficher_temperature(int temp);
   void Afficher_humidite(int hum);
-  void Afficher_time(int heure, int minute);
+  void Afficher_time(int heure, int minut);
+  void Day_mode(); //Affichage sur fond blanc (affichage jour)
+  void Night_mode(); //Affichage sur fond noir (affichage nuit)
+  void Write_to_screen();//Méthode globale d'envoie des données à l'écran  
 
   //OPERATEUR
-  Screen &operator=(std::map<String, int>& MAP);
+  /*copie la map générée par Build dans Screen_data*/
+  Screen &operator=(std::map<String, int>& MAP); 
   };
 
 #endif

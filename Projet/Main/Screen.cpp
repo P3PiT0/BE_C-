@@ -1,5 +1,5 @@
 #include "Screen.h"
-U8X8_SH1107_SEEED_128X128_HW_I2C u8x8(U8X8_PIN_NONE);
+U8G2_SH1107_SEEED_128X128_1_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
 
   void Screen::beginMap(){ 
     screen_data["HUMIDITY"]=0;
@@ -30,60 +30,68 @@ U8X8_SH1107_SEEED_128X128_HW_I2C u8x8(U8X8_PIN_NONE);
     }
     
   void Screen::Afficher_temperature(int temp) {
-    if(screen_data["LIGHT"] == 0){
-    u8x8.setFont(u8x8_font_chroma48medium8_r);
-    u8x8.draw2x2String(3,1,"T:");
-    u8x8.setFont(u8x8_font_chroma48medium8_r);
-    u8x8.setCursor(8,2);
-    u8x8.print(temp);
-    }
-    else{ 
-      Serial.println("Mode nuit"); 
-    }
+    u8g2.setFont(u8g2_font_ncenB14_tr); 
+    u8g2.drawStr(25,16, "T : ");
+    u8g2.setCursor(55,16);
+    u8g2.printf("%02d", temp);
+    u8g2.setFont(u8g2_font_unifont_t_symbols);
+    u8g2.drawGlyph(75, 11, 0x00b0);
+    u8g2.setFont(u8g2_font_ncenB14_tr);
+    u8g2.drawStr(85,15, "C");
   }
-    
 
   void Screen::Afficher_humidite(int hum){
-    if(screen_data["LIGHT"] == 0){
-    u8x8.setFont(u8x8_font_chroma48medium8_r);
-    u8x8.draw2x2String(3,3,"Hum:");
-    u8x8.setFont(u8x8_font_chroma48medium8_r);
-    u8x8.setCursor(11,4);
-    u8x8.print(hum);
-    }
-    else{ 
-      Serial.println("Mode nuit"); 
-    }
+    u8g2.setFont(u8g2_font_ncenB14_tr); 
+    u8g2.drawStr(25,35, "H : ");
+    u8g2.setCursor(55,35);
+    u8g2.printf("%02d", hum);
   }
 
-  void Screen::Afficher_time(int heure, int minute){
-    if(screen_data["LIGHT"] == 0){
-    u8x8.setFont(u8x8_font_inb33_3x6_n);
-    u8x8.setCursor(1,6);
-    u8x8.printf("%02d", heure);
-    u8x8.setFont(u8x8_font_chroma48medium8_r);
-    u8x8.draw2x2String(7,9,"h");
-    u8x8.setFont(u8x8_font_inb33_3x6_n);
-    u8x8.setCursor(10,6);
-    //u8x8.printf("%02d",0);
-    u8x8.printf("%02d", minute);
+  void Screen::Afficher_time(int heure, int minut){
+     u8g2.setFont(u8g2_font_ncenB24_tr); 
+    u8g2.setCursor(15,74);//u8g2.setCursor(x,64);
+    u8g2.printf("%02d", heure);
+    u8g2.drawStr(55,74, "h");//u8g2.drawStr(x+40,64, "h");
+    u8g2.setCursor(75,74);//u8g2.setCursor(x+60,64);
+    u8g2.printf("%02d", minut);
+  }
+
+  void Screen::Day_mode(){
+    u8g2.firstPage();
+    do {
+      u8g2.setFontMode(1); /* Transparent font mode with XOR drawing*/
+      u8g2.setDrawColor(1);
+      Afficher_temperature(screen_data["TEMPERATURE"]);
+      Afficher_humidite(screen_data["HUMIDITY"]);
+      Afficher_time(screen_data["HEURE"],screen_data["MINUTE"]);
+    }while ( u8g2.nextPage() );
+  }
+
+  void Screen::Night_mode(){
+    u8g2.firstPage();
+    do {
+      u8g2.setFontMode(1); /* Transparent font mode with XOR drawing*/
+      u8g2.setDrawColor(1);
+      u8g2.drawBox(0, 0, 128, 128); /*White screen*/
+      u8g2.setDrawColor(2);
+      Afficher_temperature(screen_data["TEMPERATURE"]);
+      Afficher_humidite(screen_data["HUMIDITY"]);
+      Afficher_time(screen_data["HEURE"],screen_data["MINUTE"]); 
+    }while ( u8g2.nextPage() );
+   }
+
+  //Méthode envoi les donner à l'écran en mode jour ou nuit 
+  void Screen::Write_to_screen(){
+    if (screen_data["LIGHT"]==0){
+      Day_mode();
     }
-    else{ 
-      Serial.println("Mode nuit"); 
+    else if (screen_data["LIGHT"]==1){
+      Night_mode();
     }
   }
-    
-
      Screen& Screen::operator=(std::map<String, int>& MAP){
-        if ((screen_data["HUMIDITY"]) != (MAP["HUMIDITY"])){
-          screen_data["HUMIDITY"] = MAP["HUMIDITY"];
-          Serial.print("Affichage Humidity");
-        }
-        if (screen_data["TEMPERATURE"] != MAP["TEMPERATURE"]){
-          screen_data["TEMPERATURE"] = MAP["TEMPERATURE"];
-          Serial.print("Affichage Temperature");
-        }
-        //LIGHT DIRECTEMENT DANS AFFICHAGE
+        screen_data["HUMIDITY"] = MAP["HUMIDITY"];
+        screen_data["TEMPERATURE"] = MAP["TEMPERATURE"];
         screen_data["LIGHT"] = MAP["LIGHT"];
         screen_data["HEURE"] = MAP["HEURE"];
         screen_data["MINUTE"] = MAP["MINUTE"];
