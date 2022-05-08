@@ -1,8 +1,6 @@
 #include "Buzzer.h"
 #include "Notes.h"
 
-class Buzzer {
-
   void Buzzer::beginBuzzer(){ 
     pinMode(buzzerPin, OUTPUT);
   }
