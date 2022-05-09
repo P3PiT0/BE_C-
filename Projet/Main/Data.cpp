@@ -33,7 +33,6 @@ DFRobot_DHT11 sensorHT;
       Dmap.Data_map[ID]=SensorData;
     }
     
-    //Humidity::Humidity():Data("HUMIDITY"){}// Constructeur 
     void Humidity::compareData (MapData Dmap){
       sensorHT.read(DHT11_PIN);
         float Humidity = sensorHT.humidity;
@@ -43,7 +42,6 @@ DFRobot_DHT11 sensorHT;
         }
     }  
 
-    //Temperature::Temperature():Data("TEMPERATURE"){} 
     void Temperature::compareData (MapData Dmap){ 
       sensorHT.read(DHT11_PIN);
         float Temperature = sensorHT.temperature;
@@ -53,7 +51,6 @@ DFRobot_DHT11 sensorHT;
         }
     }  
     
-    //Light::Light():Data("LIGHT"){ SensorData=-1;} //Constructeur 
     void Light::compareData(MapData Dmap){ //SensorDATA (-1 = not initialized, 0 = day, 1 = night)
        int light = analogRead(pinLight);// [0;678]
        if (SensorData == -1 && light <250){ 
@@ -69,9 +66,4 @@ DFRobot_DHT11 sensorHT;
           SensorData = 1;
        }
        change_map(Dmap);
-    }
-
-    void InitSensor (){
-      Serial.println("sensor begin");
-        //sensorHT.begin();
     }

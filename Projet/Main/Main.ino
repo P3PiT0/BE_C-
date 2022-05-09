@@ -23,8 +23,8 @@ std::map <String,int> rtc::Time;
 
 
 
-
-void Afficher_MAP2(std::map<String,int> mamap){
+/**********AFFICHAGE MAP POUR DEBUG****************/
+/*void Afficher_MAP2(std::map<String,int> mamap){
     Serial.println("AfficherMap");
     for (std::map<String,int>::iterator it = mamap.begin(); it!=mamap.end(); it++){
       Serial.print("ID : ");
@@ -32,16 +32,16 @@ void Afficher_MAP2(std::map<String,int> mamap){
       Serial.print(", Valeur : ");
       Serial.println(it->second);
       }
-}
+}*/
 
 void setup() {
   Serial.begin(74880);
-  InitSensor();
+  u8g2.begin();
+  //InitSensor();
   S.beginMap();
   T.beginMap(); 
   T.setupRTC();
   Buz.beginBuzzer();
-  u8g2.begin();
 }
 
 void loop() {
@@ -52,8 +52,6 @@ void loop() {
   T1.compareData(M1);
   L1.compareData(M1);
   Capteur=M1.GetMap();
-  Serial.println("MAP M1:");
-  M1.afficher_map(); 
   T.InitReveil(19,8);
 
   try{
@@ -67,13 +65,13 @@ void loop() {
     }
   Capteur=M1.GetMap();
   Time = T.RetMap();
-  Serial.println("Construction Map");
+  Serial.println("Affectation Map");
   MAP=S.BuildMap(Capteur,Time);
-  Serial.println("Affichage ancienne MAP (screen)");
-  S.Afficher_MAP(); 
+  Serial.println("Construction Map");
   S=MAP;
-  Serial.println("Affichage nouvelle MAP (screen)");
+  Serial.println("Affichage nouvelle MAP");
   S.Afficher_MAP();
+  Serial.println("Affichage de la MAP à l'écran");
   S.Write_to_screen();
   delay(2000);
 }

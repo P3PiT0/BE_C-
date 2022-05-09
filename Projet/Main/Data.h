@@ -63,7 +63,5 @@ class Light : public Data {
     //SensorDATA (-1 = not initialized, 0 = day, 1 = night)
 };
 
-
-void InitSensor (); 
   
 #endif
