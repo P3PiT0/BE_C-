@@ -41,6 +41,7 @@ void setup() {
   T.beginMap(); 
   T.setupRTC();
   Buz.beginBuzzer();
+  u8g2.begin();
 }
 
 void loop() {
@@ -53,14 +54,15 @@ void loop() {
   Capteur=M1.GetMap();
   Serial.println("MAP M1:");
   M1.afficher_map(); 
+  T.InitReveil(19,8);
 
   try{
         T.RefreshTime();
     }
         catch (int e){
         if (e==Reveil){
-              Buz.song();
-              Serial.println("Il est l'heure de se lever");
+             Buz.song();
+             Serial.println("Il est l'heure de se lever");
         }
     }
   Capteur=M1.GetMap();
@@ -73,5 +75,5 @@ void loop() {
   Serial.println("Affichage nouvelle MAP (screen)");
   S.Afficher_MAP();
   S.Write_to_screen();
-  delay(10000);
+  delay(2000);
 }

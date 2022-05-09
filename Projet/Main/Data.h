@@ -5,13 +5,15 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-#include "SHT31.h"
+#include <DFRobot_DHT11.h>
+
+#define DHT11_PIN 0
 
 using namespace std;
 
 
 
-extern SHT31 sensorHT;
+extern DFRobot_DHT11 sensorHT;
 const int pinLight=A0;
 
 class MapData { 

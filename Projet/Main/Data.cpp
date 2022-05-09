@@ -1,5 +1,5 @@
 #include "Data.h"
-SHT31 sensorHT;
+DFRobot_DHT11 sensorHT;
 
     void MapData::beginData(){
       Data_map["HUMIDITY"]=0;
@@ -34,19 +34,21 @@ SHT31 sensorHT;
     }
     
     //Humidity::Humidity():Data("HUMIDITY"){}// Constructeur 
-    void Humidity::compareData (MapData Dmap){ 
-        float humidity = sensorHT.getHumidity();
-        if (SensorData == 0 || SensorData != int(round(humidity))){
-          SensorData = int(round(humidity)); 
+    void Humidity::compareData (MapData Dmap){
+      sensorHT.read(DHT11_PIN);
+        float Humidity = sensorHT.humidity;
+        if (SensorData == 0 || SensorData != int(round(Humidity))){
+          SensorData = int(round(Humidity)); 
           change_map(Dmap);
         }
     }  
 
     //Temperature::Temperature():Data("TEMPERATURE"){} 
     void Temperature::compareData (MapData Dmap){ 
-        float temperature = sensorHT.getTemperature();
-        if (SensorData == 0 || SensorData != int(round(temperature))){
-          SensorData = int(round(temperature)); 
+      sensorHT.read(DHT11_PIN);
+        float Temperature = sensorHT.temperature;
+        if (SensorData == 0 || SensorData != int(round(Temperature))){
+          SensorData = int(round(Temperature)); 
           change_map(Dmap);
         }
     }  
@@ -70,5 +72,6 @@ SHT31 sensorHT;
     }
 
     void InitSensor (){
-        sensorHT.begin();
+      Serial.println("sensor begin");
+        //sensorHT.begin();
     }

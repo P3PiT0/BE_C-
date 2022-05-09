@@ -82,10 +82,10 @@ U8G2_SH1107_SEEED_128X128_1_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
 
   //Méthode envoi les donner à l'écran en mode jour ou nuit 
   void Screen::Write_to_screen(){
-    if (screen_data["LIGHT"]==0){
+    if (screen_data["LIGHT"]==1){
       Day_mode();
     }
-    else if (screen_data["LIGHT"]==1){
+    else if (screen_data["LIGHT"]==0){
       Night_mode();
     }
   }
