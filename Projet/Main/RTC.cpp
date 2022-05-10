@@ -10,7 +10,7 @@ RTC_DS1307 temps;
     DateTime now = temps.now();
     Time["HEURE"]=now.hour();
     Time["MINUTE"]=now.minute();
-    if (On==true && Time["HEURE"]==h && Time["MINUTE"]==m){
+    if (On==true && Time["HEURE"]==h && Time["MINUTE"]==m && now.second()<30){
       throw Reveil;
     }
   }
