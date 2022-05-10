@@ -22,13 +22,13 @@ class rtc {
   void setupRTC();
 
   // METHODE DE GESTION DE MAP TIME
-  void RefreshTime();
-  std::map <String,int> RetMap();
-  void GetTime();
+  void RefreshTime(); //met à jour le temps
+  std::map <String,int> RetMap(); //retourne la map pour l'exploiter dans le main
+  void GetTime(); // affichage de l'heure (débug) 
    
   // METHODE DE GESTION DU REVEIL
-  void InitReveil(int HEURE,int MINUTE); 
-  void DelReveil();
+  void InitReveil(int HEURE,int MINUTE);  //initialisation du réveil (InitReveil(19,8)) => le réveil sonnera à 19h08
+  void DelReveil(); // suppression du réveil
 };
 
 

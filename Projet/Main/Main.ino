@@ -54,7 +54,8 @@ void loop() {
   Capteur=M1.GetMap();
   T.InitReveil(19,8);
 
-  try{
+  //INTERRUPTION ACTIVE SI L'HEURE CORRESPOND A L'HEURE D'ACTIVATION DU REVEIL
+  try{ 
         T.RefreshTime();
     }
         catch (int e){
@@ -63,6 +64,7 @@ void loop() {
              Serial.println("Il est l'heure de se lever");
         }
     }
+    
   Capteur=M1.GetMap();
   Time = T.RetMap();
   Serial.println("Affectation Map");
@@ -73,5 +75,5 @@ void loop() {
   S.Afficher_MAP();
   Serial.println("Affichage de la MAP à l'écran");
   S.Write_to_screen();
-  delay(2000);
+  delay(1000);
 }

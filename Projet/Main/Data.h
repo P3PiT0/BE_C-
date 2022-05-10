@@ -38,9 +38,9 @@ class Data {
   Data();  
   Data(String a); 
   //MODIFICATION DE LA MAP
-  virtual void compareData(MapData Dmap) = 0;
-  int getData();
-  void change_map (MapData Dmap);
+  virtual void compareData(MapData Dmap) = 0; 
+  int getData(); //retourne la map pour l'exploiter dans le main
+  void change_map (MapData Dmap); //débug
   friend class MapData;
 }; 
 

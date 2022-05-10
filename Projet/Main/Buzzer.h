@@ -14,9 +14,11 @@ const int buzzerPin=D7;
 class Buzzer {
 
   public :
-  void beginBuzzer();
-  void beep(int note, int duration);
-  void song();
+    //METHODE D'INITIALISATION 
+  void beginBuzzer(); //initialisation 
+    //METHODE D'UTILISATION DU BUZZER
+  void beep(int note, int duration); //joue une note
+  void song(); //joue une musique (appelée dans le main lors de l'interruption)
 };
 
 #endif
