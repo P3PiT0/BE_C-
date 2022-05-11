@@ -52,7 +52,7 @@ void loop() {
   T1.compareData(M1);
   L1.compareData(M1);
   Capteur=M1.GetMap();
-  T.InitReveil(21,50);
+  T.InitReveil(15,24);
 
   //INTERRUPTION ACTIVE SI L'HEURE CORRESPOND A L'HEURE D'ACTIVATION DU REVEIL
   try{ 
